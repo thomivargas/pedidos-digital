@@ -12,7 +12,11 @@ RUN npm ci
 COPY . .
 
 # Variables dummy para que la validación de env.ts pase durante prisma generate y tsc
-ENV DATABASE_URL="postgresql://dummy:dummy@localhost:5432/dummy" \
+ENV DATABASE_URL="sqlserver://localhost:1433;database=dummy;user=dummy;password=dummy-password-1;encrypt=true" \
+    DB_HOST="localhost" \
+    DB_USER="dummy" \
+    DB_PASSWORD="dummy-password-1" \
+    DB_NAME="dummy" \
     JWT_ACCESS_SECRET="dummy-secret-at-least-16-chars" \
     JWT_REFRESH_SECRET="dummy-secret-at-least-16-chars" \
     CORS_ORIGIN="http://localhost"
@@ -39,4 +43,4 @@ ENV NODE_ENV=production
 
 EXPOSE ${PORT:-3000}
 
-CMD ["sh", "-c", "npx prisma migrate deploy && node dist/server.js"]
+CMD ["sh", "-c", "npx prisma db push && node dist/server.js"]

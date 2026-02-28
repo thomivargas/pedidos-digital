@@ -1,4 +1,6 @@
+import { PrismaMssql } from "@prisma/adapter-mssql";
 import { PrismaClient } from "@prisma/client";
+import { env } from "./env";
 
 // Singleton para evitar múltiples instancias de Prisma
 declare global {
@@ -7,10 +9,26 @@ declare global {
 
 let prisma: PrismaClient;
 
-if (process.env.NODE_ENV === "production") {
-  prisma = new PrismaClient();
+const adapter = new PrismaMssql({
+  server: env.DB_HOST,
+  user: env.DB_USER,
+  password: env.DB_PASSWORD,
+  database: env.DB_NAME,
+  options: {
+    encrypt: true,
+    trustServerCertificate: false,
+  },
+  pool: {
+    max: 5,
+    min: 0,
+    idleTimeoutMillis: 30000,
+  },
+});
+
+if (env.NODE_ENV === "production") {
+  prisma = new PrismaClient({ adapter });
 } else {
-  if (!global.prisma) global.prisma = new PrismaClient();
+  if (!global.prisma) global.prisma = new PrismaClient({ adapter });
   prisma = global.prisma;
 }
 

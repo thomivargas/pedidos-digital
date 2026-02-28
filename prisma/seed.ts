@@ -1,16 +1,19 @@
-import { PrismaMariaDb } from '@prisma/adapter-mariadb';
+import { PrismaMssql } from '@prisma/adapter-mssql';
 import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcryptjs';
 import dotenv from 'dotenv';
 
 dotenv.config();
 
-const adapter = new PrismaMariaDb({
-  host: process.env.DB_HOST!,
-  port: Number(process.env.DB_PORT) || 3306,
+const adapter = new PrismaMssql({
+  server: process.env.DB_HOST!,
   user: process.env.DB_USER!,
   password: process.env.DB_PASSWORD!,
   database: process.env.DB_NAME!,
+  options: {
+    encrypt: true,
+    trustServerCertificate: false,
+  },
 });
 
 const prisma = new PrismaClient({ adapter });

@@ -3,18 +3,7 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-}
-
-enum Rol {
-  ADMIN
-  VENDEDOR
-}
-
-enum EstadoPedido {
-  PENDIENTE
-  ENVIADO_A_CAJA
-  COMPLETADO
+  provider = "sqlserver"
 }
 
 model Sucursal {
@@ -32,7 +21,7 @@ model Usuario {
   correo        String    @unique
   contrasena    String
   nombre        String
-  rol           Rol       @default(VENDEDOR)
+  rol           String    @default("VENDEDOR") // ADMIN | VENDEDOR
   creadoEn      DateTime  @default(now())
   actualizadoEn DateTime  @updatedAt
 
@@ -43,14 +32,14 @@ model Usuario {
 }
 
 model Pedido {
-  id                 String       @id @default(cuid())
+  id                 String   @id @default(cuid())
   nombreProducto     String
-  precio             Decimal      @db.Decimal(10, 2)
-  cotizacionDolar    Decimal      @db.Decimal(10, 2)
+  precio             Decimal  @db.Decimal(10, 2)
+  cotizacionDolar    Decimal  @db.Decimal(10, 2)
   sku                String
-  estado             EstadoPedido @default(PENDIENTE)
-  creadoEn           DateTime     @default(now())
-  actualizadoEn      DateTime     @updatedAt
+  estado             String   @default("PENDIENTE") // PENDIENTE | ENVIADO_A_CAJA | COMPLETADO
+  creadoEn           DateTime @default(now())
+  actualizadoEn      DateTime @updatedAt
 
   vendedorId String
   vendedor   Usuario @relation(fields: [vendedorId], references: [id])
