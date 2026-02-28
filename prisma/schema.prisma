@@ -1,0 +1,57 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+}
+
+enum Rol {
+  ADMIN
+  VENDEDOR
+}
+
+enum EstadoPedido {
+  PENDIENTE
+  ENVIADO_A_CAJA
+  COMPLETADO
+}
+
+model Sucursal {
+  id            String    @id @default(cuid())
+  nombre        String
+  direccion     String?
+  creadoEn      DateTime  @default(now())
+  actualizadoEn DateTime  @updatedAt
+
+  vendedores Usuario[]
+}
+
+model Usuario {
+  id            String    @id @default(cuid())
+  correo        String    @unique
+  contrasena    String
+  nombre        String
+  rol           Rol       @default(VENDEDOR)
+  creadoEn      DateTime  @default(now())
+  actualizadoEn DateTime  @updatedAt
+
+  sucursalId String?
+  sucursal   Sucursal? @relation(fields: [sucursalId], references: [id], onDelete: SetNull)
+
+  pedidos Pedido[]
+}
+
+model Pedido {
+  id                 String       @id @default(cuid())
+  nombreProducto     String
+  precio             Decimal      @db.Decimal(10, 2)
+  cotizacionDolar    Decimal      @db.Decimal(10, 2)
+  sku                String
+  estado             EstadoPedido @default(PENDIENTE)
+  creadoEn           DateTime     @default(now())
+  actualizadoEn      DateTime     @updatedAt
+
+  vendedorId String
+  vendedor   Usuario @relation(fields: [vendedorId], references: [id])
+}
