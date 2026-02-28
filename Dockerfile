@@ -11,11 +11,11 @@ RUN npm ci
 
 COPY . .
 
-# Variables dummy para que la validación de env.ts pase durante prisma generate y tsc
-ENV DATABASE_URL="sqlserver://localhost:1433;database=dummy;user=dummy;password=dummy-password-1;encrypt=true" \
-    DB_HOST="localhost" \
+# Variables dummy SOLO para build
+ENV DATABASE_URL="sqlserver://localhost:1433;database=dummy;user=dummy;password=dummy;encrypt=true" \
+    DB_HOST="dummy" \
     DB_USER="dummy" \
-    DB_PASSWORD="dummy-password-1" \
+    DB_PASSWORD="dummy" \
     DB_NAME="dummy" \
     JWT_ACCESS_SECRET="dummy-secret-at-least-16-chars" \
     JWT_REFRESH_SECRET="dummy-secret-at-least-16-chars" \
@@ -23,7 +23,6 @@ ENV DATABASE_URL="sqlserver://localhost:1433;database=dummy;user=dummy;password=
 
 RUN npx prisma generate
 RUN npm run build
-RUN npm run start
 
 # ── Production stage ──────────────────────────────────────────
 FROM node:22-alpine
