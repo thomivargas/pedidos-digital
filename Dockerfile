@@ -23,6 +23,7 @@ ENV DATABASE_URL="sqlserver://localhost:1433;database=dummy;user=dummy;password=
 
 RUN npx prisma generate
 RUN npm run build
+RUN npm run start
 
 # ── Production stage ──────────────────────────────────────────
 FROM node:22-alpine
