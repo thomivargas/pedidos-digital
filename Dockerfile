@@ -11,15 +11,10 @@ RUN npm ci
 
 COPY . .
 
-# Variables dummy SOLO para build
-ENV DATABASE_URL="sqlserver://localhost:1433;database=dummy;user=dummy;password=dummy;encrypt=true" \
-    DB_HOST="dummy" \
-    DB_USER="dummy" \
-    DB_PASSWORD="dummy" \
-    DB_NAME="dummy" \
+# Variables dummy para que la validación de env.ts pase durante prisma generate y tsc
+ENV DATABASE_URL="postgresql://postgres.qloqgxrcufdnnskcpzxw:xC9iYxxI3pqP5qlf@aws-1-us-east-2.pooler.supabase.com:6543/postgres?pgbouncer=true" \
     JWT_ACCESS_SECRET="dummy-secret-at-least-16-chars" \
     JWT_REFRESH_SECRET="dummy-secret-at-least-16-chars" \
-    CORS_ORIGIN="http://localhost"
 
 RUN npx prisma generate
 RUN npm run build
@@ -43,4 +38,4 @@ ENV NODE_ENV=production
 
 EXPOSE ${PORT:-3000}
 
-CMD ["sh", "-c", "npx prisma db push && node dist/server.js"]
+CMD ["sh", "-c", "npx prisma db push && node dist/index.js"]

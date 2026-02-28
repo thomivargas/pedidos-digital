@@ -11,6 +11,6 @@ export default defineConfig({
     seed: "npx ts-node -r tsconfig-paths/register prisma/seed.ts",
   },
   datasource: {
-    url: env.DATABASE_URL,
+    url: env.DIRECT_URL,
   },
 });
