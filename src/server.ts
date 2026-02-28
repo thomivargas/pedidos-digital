@@ -12,10 +12,11 @@ async function bootstrap() {
     process.exit(1);
   }
 
-  const server = app.listen(env.PORT, () => {
-    console.log(`🚀 Servidor corriendo en http://localhost:${env.PORT}`);
+  const host = '0.0.0.0';
+  const server = app.listen(env.PORT, host, () => {
+    console.log(`🚀 Servidor corriendo en http://${host}:${env.PORT}`);
     console.log(`📋 Ambiente: ${env.NODE_ENV}`);
-    console.log(`🔍 Health check: http://localhost:${env.PORT}/health`);
+    console.log(`🔍 Health check: http://${host}:${env.PORT}/health`);
   });
 
   // ─── Graceful shutdown ──────────────────────────────────────────────────────
