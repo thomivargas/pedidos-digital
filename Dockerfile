@@ -26,7 +26,6 @@ WORKDIR /app
 
 COPY package.json package-lock.json ./
 COPY prisma ./prisma/
-COPY prisma.config.ts ./
 
 RUN npm ci --omit=dev
 
@@ -38,4 +37,4 @@ ENV NODE_ENV=production
 
 EXPOSE 3000
 
-CMD ["sh", "-c", "npx prisma migrate deploy && node dist/server.js"]
+CMD ["sh", "-c", "echo 'Starting container...' && npx prisma migrate deploy --schema prisma/schema.prisma && echo 'Migrations done, starting server...' && node dist/server.js"]
