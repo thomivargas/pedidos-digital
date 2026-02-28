@@ -12,9 +12,10 @@ RUN npm ci
 COPY . .
 
 # Variables dummy para que la validación de env.ts pase durante prisma generate y tsc
-ENV DATABASE_URL="postgresql://postgres.qloqgxrcufdnnskcpzxw:xC9iYxxI3pqP5qlf@aws-1-us-east-2.pooler.supabase.com:6543/postgres?pgbouncer=true" \
+ENV DATABASE_URL="postgresql://dummy:dummy@localhost:5432/dummy" \
+    DIRECT_URL="postgresql://dummy:dummy@localhost:5432/dummy" \
     JWT_ACCESS_SECRET="dummy-secret-at-least-16-chars" \
-    JWT_REFRESH_SECRET="dummy-secret-at-least-16-chars" \
+    JWT_REFRESH_SECRET="dummy-secret-at-least-16-chars"
 
 RUN npx prisma generate
 RUN npm run build
