@@ -12,12 +12,7 @@ RUN npm ci
 COPY . .
 
 # Variables dummy para que la validación de env.ts pase durante prisma generate y tsc
-ENV DATABASE_URL="mysql://dummy:dummy@localhost:3306/dummy" \
-    DB_HOST="localhost" \
-    DB_PORT="3306" \
-    DB_USER="dummy" \
-    DB_PASSWORD="dummy" \
-    DB_NAME="dummy" \
+ENV DATABASE_URL="postgresql://dummy:dummy@localhost:5432/dummy" \
     JWT_ACCESS_SECRET="dummy-secret-at-least-16-chars" \
     JWT_REFRESH_SECRET="dummy-secret-at-least-16-chars" \
     CORS_ORIGIN="http://localhost"

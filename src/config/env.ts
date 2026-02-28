@@ -12,11 +12,6 @@ const envSchema = z.object({
   JWT_REFRESH_SECRET: z.string().nonempty('token es requerido').min(16),
   JWT_ACCESS_EXPIRES_IN: z.string().default('15m'),
   JWT_REFRESH_EXPIRES_IN: z.string().default('7d'),
-  DB_HOST: z.string().nonempty('DB_HOST es requerido'),
-  DB_PORT: z.string().default('3306').transform(Number),
-  DB_USER: z.string().nonempty('DB_USER es requerido'),
-  DB_PASSWORD: z.string().nonempty('DB_PASSWORD es requerido'),
-  DB_NAME: z.string().nonempty('DB_NAME es requerido'),
 
   BCRYPT_ROUNDS: z.string().default('10').transform(Number),
 
