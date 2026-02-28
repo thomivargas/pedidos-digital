@@ -39,4 +39,4 @@ ENV NODE_ENV=production
 
 EXPOSE ${PORT:-3000}
 
-CMD ["sh", "-c", "npx prisma db push && node dist/index.js"]
+CMD ["sh", "-c", "node dist/index.js"]
