@@ -17,7 +17,6 @@ ENV DATABASE_URL="postgresql://dummy:dummy@localhost:5432/dummy" \
     JWT_ACCESS_SECRET="dummy-secret-at-least-16-chars" \
     JWT_REFRESH_SECRET="dummy-secret-at-least-16-chars"
 
-RUN npx prisma generate
 RUN npm run build
 
 # ── Production stage ──────────────────────────────────────────
@@ -37,6 +36,6 @@ COPY --from=builder /app/node_modules/@prisma ./node_modules/@prisma
 
 ENV NODE_ENV=production
 
-EXPOSE ${PORT:-3000}
+EXPOSE 3000
 
-CMD ["sh", "-c", "node dist/index.js"]
+CMD ["sh", "-c", "npx prisma migrate deploy && node dist/server.js"]

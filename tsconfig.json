@@ -15,10 +15,10 @@
     "sourceMap": true,
     "baseUrl": ".",
     "paths": {
-      "@modules/*": ["/src/modules/*"],
-      "@config/*": ["/src/config/*"],
-      "@middlewares/*": ["/src/middlewares/*"],
-      "@utils/*": ["/src/utils/*"]
+      "@modules/*": ["./src/modules/*"],
+      "@config/*": ["./src/config/*"],
+      "@middlewares/*": ["./src/middlewares/*"],
+      "@utils/*": ["./src/utils/*"]
     }
   },
   "include": ["src/**/*"],
